@@ -1,7 +1,13 @@
-FROM python:3.10
+FROM python:3.11
+
+WORKDIR /usr/src/tca
+
+COPY ./app ./app
+COPY ./data ./data
+
+COPY pyproject.toml poetry.lock README.md ./
+
 RUN pip install poetry
-WORKDIR /app
-COPY poetry.lock pyproject.toml /app/
 RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
-COPY . /app
-CMD python main.py
+
+CMD [ "poetry", "run", "start" ]
