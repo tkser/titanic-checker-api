@@ -4,10 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["tkser <tkser.edu@gmail.com>"]
 readme = "README.md"
-packages = [{include = "api"}]
+packages = [{include = "app"}]
 
 [tool.poetry.scripts]
-start = "api.main:main"
+start = "app.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.11"
