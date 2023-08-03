@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.judge import judge_csv
@@ -29,8 +29,9 @@ async def index():
     return {"message": "Hello, Titanic!"}
 
 @app.post("/judge")
-async def post_judge(csv_data: str):
-    return await judge_csv(csv_data)
+async def post_judge(csv_file: bytes = File(...)):
+    content = csv_file.decode("utf-8")
+    return await judge_csv(content)
 
 def main():
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
