@@ -3,7 +3,7 @@ from sklearn.metrics import accuracy_score
 
 from io import StringIO
 
-from data import test_df
+from app.api.data import test_df
 
 async def judge_csv(csv_data: str):
     try:
