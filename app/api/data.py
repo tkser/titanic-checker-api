@@ -1,9 +1,9 @@
 import os
 import pandas as pd
 
-test_df = None
+import app.api as api
 
 async def df_initialize():
-    global test_df
+    api.test_df = None
     data_path = os.path.join(os.path.dirname(__file__), "../../data/test_true.csv")
-    test_df = pd.read_csv(data_path)
+    api.test_df = pd.read_csv(data_path)

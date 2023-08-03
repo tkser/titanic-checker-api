@@ -3,29 +3,32 @@ from sklearn.metrics import accuracy_score
 
 from io import StringIO
 
-from app.api.data import test_df
+import app.api as api
 
 async def judge_csv(csv_data: str):
     try:
         data = StringIO(csv_data)
-        df = pd.read_csv(data)
+        df_pred = pd.read_csv(data)
+        df = api.test_df.copy()
 
-        if not isinstance(df, pd.DataFrame):
+        if not isinstance(df_pred, pd.DataFrame):
             raise Exception("Invalid data type")
 
-        if df.columns.tolist() != test_df.columns.tolist():
+        if df_pred.columns.tolist() != df.columns.tolist():
             raise Exception("Invalid columns")
         
-        if df.shape != test_df.shape:
+        if df.shape != df.shape:
             raise Exception("Invalid shape")
         
         if df.isnull().sum().sum() > 0:
             raise Exception("Invalid data")
         
-        y_true = test_df["target"]
-        y_pred = df["target"]
+        df = pd.merge(df, df_pred, on="PassengerId", how="inner", suffixes=("_true", "_pred"))
 
-        score = accuracy_score(y_true, y_pred)
+        if df.shape[0] != df_pred.shape[0]:
+            raise Exception("Invalid data")
+
+        score = accuracy_score(df["Survived_true"], df["Survived_pred"])
 
         return {
             "status": "success",

@@ -29,8 +29,8 @@ async def index():
     return {"message": "Hello, Titanic!"}
 
 @app.post("/judge")
-async def post_judge(csv_file: bytes = File(...)):
-    content = csv_file.decode("utf-8")
+async def post_judge(file: bytes = File(...)):
+    content = file.decode("utf-8")
     return await judge_csv(content)
 
 def main():
