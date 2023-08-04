@@ -14,18 +14,18 @@ async def judge_csv(csv_data: str):
         if not isinstance(df_pred, pd.DataFrame):
             raise Exception("Invalid data type")
 
-        if df_pred.columns.tolist() != df.columns.tolist():
+        if df.columns.tolist() != df_pred.columns.tolist():
             raise Exception("Invalid columns")
         
-        if df.shape != df.shape:
+        if df.shape != df_pred.shape:
             raise Exception("Invalid shape")
         
-        if df.isnull().sum().sum() > 0:
+        if df_pred.isnull().sum().sum() > 0:
             raise Exception("Invalid data")
         
         df = pd.merge(df, df_pred, on="PassengerId", how="inner", suffixes=("_true", "_pred"))
 
-        if df.shape[0] != df_pred.shape[0]:
+        if df["Survived_pred"].isnull().sum() > 0:
             raise Exception("Invalid data")
 
         score = accuracy_score(df["Survived_true"], df["Survived_pred"])
