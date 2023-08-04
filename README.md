@@ -1,5 +1,7 @@
 # titanic-checker-api
 
+![Uptime Robot status](https://img.shields.io/uptimerobot/status/m794943788-518f686ad9b5b68a07cbc8ee)
+
 API server for validating predicts of the Titanic dataset.<br />
 It is expected to be used with [tkser/titanic-checker-front](https://github.com/tkser/titanic-checker-front).
 
